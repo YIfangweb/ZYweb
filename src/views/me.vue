@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive,getCurrentInstance } from 'vue'
+import { ref, reactive, getCurrentInstance } from 'vue'
 import { ElNotification } from 'element-plus'
 
 const { proxy } = getCurrentInstance();
@@ -34,7 +34,16 @@ const submit = () => {
                 email: content.email,
                 data: content.data
             }).then(res => {
-                console.log(res.data)
+                if (res.data == "success") {
+                    ElNotification({
+                        title: '提示',
+                        message: '留言成功',
+                        type: 'success'
+                    })
+                    content.name = ''
+                    content.email = ''
+                    content.data = ''
+                }
             })
         } else {
             ElNotification({

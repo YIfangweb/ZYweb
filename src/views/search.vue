@@ -2,7 +2,7 @@
 import { ref, onMounted, reactive, getCurrentInstance, watch } from 'vue'
 import userStore from '../stores/userStore'
 import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
+import { ElMessage,ElLoading  } from 'element-plus'
 const { proxy } = getCurrentInstance();
 const router = useRouter()
 const searchData = ref("")
@@ -25,6 +25,7 @@ onMounted(() => {
         router.push("/login")
     } else {
         proxy.$axios.get('/medicine/getAllMedicine').then(res => {
+            const loadingInstance = ElLoading.service({ fullscreen: true })
             searchList.splice(0, searchList.length)
             res.data.forEach(item => {
                 searchList.push({
@@ -33,6 +34,7 @@ onMounted(() => {
                     img: item.medicineImg,
                 })
             })
+            loadingInstance.close()
         })
     }
 })
@@ -77,6 +79,7 @@ watch(radio3, () => {
     getMedicineByCate()
 })
 const getMedicineByCate = () => {
+    const loadingInstance = ElLoading.service({ fullscreen: true })
     //清除searchList
     searchList.splice(0, searchList.length)
     proxy.$axios.post('/medicine/getMedicineByCate', {
@@ -91,6 +94,7 @@ const getMedicineByCate = () => {
             })
         })
     })
+    loadingInstance.close()
 }
 const tosearch = () => {
     //清除searchList
