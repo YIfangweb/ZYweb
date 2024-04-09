@@ -1,0 +1,17 @@
+import { defineStore } from 'pinia'
+
+let userStore;
+export default userStore = defineStore('userInfo', {
+    state:()=>{
+        return {  //一定要返回数据，不然不能储存
+            userInfo:{}
+        }
+    },
+    getters: {},
+    actions: {},
+    persist : {
+        enabled:true, //开启持久化
+        key:'userInfo', //储存的key
+        storage:window.sessionStorage, //储存的类型
+    }
+})
