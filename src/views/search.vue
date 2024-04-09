@@ -24,8 +24,9 @@ onMounted(() => {
         })
         router.push("/login")
     } else {
+        const loadingInstance = ElLoading.service({ fullscreen: true })
         proxy.$axios.get('/medicine/getAllMedicine').then(res => {
-            const loadingInstance = ElLoading.service({ fullscreen: true })
+            
             searchList.splice(0, searchList.length)
             res.data.forEach(item => {
                 searchList.push({
@@ -93,8 +94,8 @@ const getMedicineByCate = () => {
                 img: item.medicineImg,
             })
         })
-    })
-    loadingInstance.close()
+        loadingInstance.close()
+    }) 
 }
 const tosearch = () => {
     //清除searchList
