@@ -14,6 +14,7 @@ onMounted(() => {
         })
         router.push("/login")
     } else {
+        const loadingInstance = ElLoading.service({ fullscreen: true })
         proxy.$axios.get('/soup/getSoupList').then(res => {
             soupList.splice(0, soupList.length)
             res.data.forEach(item => {
@@ -28,6 +29,7 @@ onMounted(() => {
                     d5: item.soupFf
                 })
             })
+            loadingInstance.close()
         })
     }
 })
