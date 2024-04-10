@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, reactive, getCurrentInstance, watch } from 'vue'
 import userStore from '../stores/userStore'
-import { ElMessage,ElLoading } from 'element-plus'
+import { ElMessage, ElLoading } from 'element-plus'
 
 const { proxy } = getCurrentInstance();
 
@@ -14,26 +14,28 @@ onMounted(() => {
         })
         router.push("/login")
     } else {
-        const loadingInstance = ElLoading.service({ fullscreen: true })
-        proxy.$axios.get('/soup/getSoupList').then(res => {
-            soupList.splice(0, soupList.length)
-            res.data.forEach(item => {
-                soupList.push({
-                    id: item.soupId,
-                    title: item.soupName,
-                    url: item.soupImg,
-                    d1: item.soupFa,
-                    d2: item.soupFb,
-                    d3: item.soupFc,
-                    d4: item.soupFe,
-                    d5: item.soupFf
-                })
-            })
-            loadingInstance.close()
-        })
+        getSoupList()
     }
 })
-
+const getSoupList = () => {
+    const loadingInstance = ElLoading.service({ fullscreen: true })
+    proxy.$axios.get('/soup/getSoupList').then(res => {
+        soupList.splice(0, soupList.length)
+        res.data.forEach(item => {
+            soupList.push({
+                id: item.soupId,
+                title: item.soupName,
+                url: item.soupImg,
+                d1: item.soupFa,
+                d2: item.soupFb,
+                d3: item.soupFc,
+                d4: item.soupFe,
+                d5: item.soupFf
+            })
+        })
+        loadingInstance.close()
+    })
+}
 const soupList = reactive([{
     id: '',
     title: '',
@@ -94,23 +96,23 @@ const handleClose = () => {
     soupDetail.d8 = ''
     soupDetail.desc = ''
 }
-const addSoupF=() => {
-    soupForm.value = soupDetail.d1+'/'+soupDetail.d2+'/'+soupDetail.d3+'/'+soupDetail.d4+'/'+soupDetail.d5
-    if(soupDetail.d6!=null){
-        soupForm.value= soupForm.value+'/'+soupDetail.d6
+const addSoupF = () => {
+    soupForm.value = soupDetail.d1 + '/' + soupDetail.d2 + '/' + soupDetail.d3 + '/' + soupDetail.d4 + '/' + soupDetail.d5
+    if (soupDetail.d6 != null) {
+        soupForm.value = soupForm.value + '/' + soupDetail.d6
     }
-    if(soupDetail.d7!=null){  
-        soupForm.value= soupForm.value+'/'+soupDetail.d7
+    if (soupDetail.d7 != null) {
+        soupForm.value = soupForm.value + '/' + soupDetail.d7
     }
-    if(soupDetail.d8!=null){  
-        soupForm.value= soupForm.value+'/'+soupDetail.d8
+    if (soupDetail.d8 != null) {
+        soupForm.value = soupForm.value + '/' + soupDetail.d8
     }
 }
-const searchData =ref('')
+const searchData = ref('')
 
-const toSearch=() => {
+const toSearch = () => {
     const loadingInstance = ElLoading.service({ fullscreen: true })
-    proxy.$axios.get('/soup/searchSoup?keyword='+searchData.value).then(res => {
+    proxy.$axios.get('/soup/searchSoup?keyword=' + searchData.value).then(res => {
         soupList.splice(0, soupList.length)
         res.data.forEach(item => {
             soupList.push({
@@ -166,7 +168,7 @@ const toSearch=() => {
                         配方搜索
                     </div>
                     <div class="r-input">
-                        <el-input placeholder="查询您需要的配方" v-model="searchData"/>
+                        <el-input placeholder="查询您需要的配方" v-model="searchData" />
                         <el-button type="primary" @click="toSearch">搜索</el-button>
                     </div>
                     <img src="../assets//ys.jpg" class="r-img">
@@ -184,12 +186,11 @@ const toSearch=() => {
                     <el-input v-model="soupDetail.title" readonly />
                 </el-form-item>
                 <el-form-item label="汤饮材料">
-                    <el-input type="textarea" v-model="soupForm" :autosize="{ minRows: 2, maxRows: 100 }"
-                        readonly />
+                    <el-input type="textarea" v-model="soupForm" :autosize="{ minRows: 2, maxRows: 100 }" readonly />
                 </el-form-item>
                 <el-form-item label="汤饮描述">
-                    <el-input type="textarea" v-model="soupDetail.desc" resize="none" :autosize="{ minRows: 2, maxRows: 100 }"
-                        readonly />
+                    <el-input type="textarea" v-model="soupDetail.desc" resize="none"
+                        :autosize="{ minRows: 2, maxRows: 100 }" readonly />
                 </el-form-item>
             </el-form>
         </el-scrollbar>
@@ -237,11 +238,9 @@ const toSearch=() => {
     width: 40%;
     height: 530px;
     border-top: 2px solid rgba(199, 166, 115, 1);
-    position: relative;
-    left: 5%;
-    top: 3px;
     float: left;
-    margin-right: 8%;
+    margin-left: 6%;
+    margin-top: 5%;
 }
 
 .r-img {

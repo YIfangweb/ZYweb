@@ -2,13 +2,13 @@ import axios from "axios";
 import qs from "qs";
 
 // axios.defaults.baseURL = ''  //正式
-axios.defaults.baseURL = 'https://cn-cd-dx-tmp7.natfrp.cloud:23848/' //测试
-
+// axios.defaults.baseURL = 'https://cn-cd-dx-tmp7.natfrp.cloud:23848/' //测试
+axios.defaults.baseURL = 'http://localhost:8080'
 //post请求头
 // axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 //设置超时
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 15000;
 
 axios.interceptors.request.use(
     config => {
