@@ -12,6 +12,6 @@ export default userStore = defineStore('userInfo', {
     persist : {
         enabled:true, //开启持久化
         key:'userInfo', //储存的key
-        storage:window.sessionStorage, //储存的类型
+        storage:sessionStorage, //储存的类型
     }
 })

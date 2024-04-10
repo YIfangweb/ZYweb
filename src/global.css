@@ -12,3 +12,7 @@
     font-family: "yao";
     src: url("./assets/方正姚体.ttf");
 }
+* {
+    margin: 0;
+    padding: 0;
+  }

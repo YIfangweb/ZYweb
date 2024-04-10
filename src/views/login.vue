@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, getCurrentInstance, reactive, ref } from 'vue'
 import type { FormProps } from 'element-plus'
-import { ElMessage } from 'element-plus'
+import { ElMessage,ElNotification } from 'element-plus'
 import userStore from '../stores/userStore'
 import { useRouter } from 'vue-router'
 const { proxy } = getCurrentInstance();
@@ -108,7 +108,7 @@ const register = () => {
                 type: 'success',
             })
             signInDialog.value = false
-        }else{
+        } else {
             ElMessage({
                 message: res.msg,
                 type: 'warning',
@@ -118,20 +118,28 @@ const register = () => {
 }
 const registerBtn = ref(true)
 
-const checkAccount=() => {
-    proxy.$axios.post("/user/checkAccount", {
-        userName: signInForm.userName
-    }).then(res => {
-        if (res.data === 1) {
-            ElMessage({
-                message: '账号已存在',
-                type: 'warning',
-            })
-            registerBtn.value = true
-        }else{
-            registerBtn.value = false
-        }
-    })
+const checkAccount = () => {
+    if (signInForm.userName !== '') {
+        proxy.$axios.post("/user/checkAccount", {
+            userName: signInForm.userName
+        }).then(res => {
+            if (res.data === 1) {
+                ElMessage({
+                    message: '账号已存在',
+                    type: 'warning',
+                })
+                registerBtn.value = true
+            } else {
+                registerBtn.value = false
+            }
+        })
+    } else {
+        ElNotification({
+            message: '账号不能为空',
+            type: 'warning',
+            title: '提示'
+        })
+    }
 }
 </script>
 <template>
@@ -162,7 +170,7 @@ const checkAccount=() => {
             </el-form-item>
             <el-form-item label="头像">
                 <input type="file" @change="chooseImg" id="chooseImg" style="display: none;"
-                    accept="image/png,image/jpeg,image/jpg">
+                    accept="image/*">
                 <img v-bind:src="defaultImg" class="userIcon" @click="openChooseImg">
             </el-form-item>
             <el-form-item>

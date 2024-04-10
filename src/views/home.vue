@@ -56,6 +56,16 @@ const toPicture = () => {
 const toMe = () => {
     router.push("/me")
 }
+const toMake = () => {
+    router.push("/make")
+}
+const toMuseum = () => {
+    router.push("/museum")
+}
+const loginout = () => {
+    userStore().$reset()
+    router.push("/login")
+}
 </script>
 
 <template>
@@ -94,9 +104,13 @@ const toMe = () => {
                     <p class="h-actions-text-en">Mores</p>
                 </div>
                 <ul class="Mores-ul">
-                    <li class="h-actions-item-li">中药炮制</li>
-                    <li class="h-actions-item-li">博物馆</li>
+                    <li class="h-actions-item-li" @click="toMake">中药炮制</li>
+                    <li class="h-actions-item-li" @click="toMuseum">博物馆</li>
                 </ul>
+                <div class="h-actions-item" @click="loginout">
+                    <span class="h-actions-text">退出</span>
+                    <p class="h-actions-text-en">OUT</p>
+                </div>
             </div>
             <div class="h-bottom">
                 <p class="h-bottom-text" @click="toMe">联系我们</p>

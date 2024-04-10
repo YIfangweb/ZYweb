@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, getCurrentInstance } from 'vue'
-import { ElNotification } from 'element-plus'
+import { ElNotification,ElLoading } from 'element-plus'
 
 const { proxy } = getCurrentInstance();
 const content = reactive({
@@ -29,6 +29,7 @@ const submit = () => {
         })
     } else {
         if (mailCheck(content.email)) {
+            const loadingInstance = ElLoading.service({ fullscreen: true })
             proxy.$axios.post('/user/sugestion', {
                 name: content.name,
                 email: content.email,
@@ -43,6 +44,7 @@ const submit = () => {
                     content.name = ''
                     content.email = ''
                     content.data = ''
+                    loadingInstance.close()
                 }
             })
         } else {

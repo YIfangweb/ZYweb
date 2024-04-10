@@ -46,6 +46,16 @@ const routes = [
     name: "me",
     component: () => import("../views/me.vue"),
   },
+  {
+    path: "/make",
+    name: "make",
+    component: () => import("../views/make.vue"),
+  },
+  {
+    path: "/museum",
+    name: "museum",
+    component: () => import("../views/museum.vue"),
+  },
 ]
 
 const router = createRouter({
